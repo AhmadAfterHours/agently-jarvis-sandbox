@@ -1,5 +1,17 @@
 """Runway alert classification for Arcwell Cash Watch."""
 
+from math import isfinite
+
+
+def _require_finite_number(value: float, name: str) -> None:
+    """Raise a clear error unless ``value`` is a finite real number."""
+    try:
+        finite = isfinite(value)
+    except TypeError as error:
+        raise ValueError(f"{name} must be a finite number") from error
+    if not finite:
+        raise ValueError(f"{name} must be a finite number")
+
 
 def runway_alert(
     cash: float,
@@ -12,6 +24,14 @@ def runway_alert(
     ``act`` applies below ``threshold_months``. ``watch`` applies below twice
     that threshold. Companies with no net cash burn are ``ok``.
     """
+    for value, name in (
+        (cash, "cash"),
+        (expenses, "expenses"),
+        (revenue, "revenue"),
+        (threshold_months, "threshold_months"),
+    ):
+        _require_finite_number(value, name)
+
     if threshold_months < 0:
         raise ValueError("threshold_months must not be negative")
 
