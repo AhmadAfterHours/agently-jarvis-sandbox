@@ -6,7 +6,7 @@ from arcwell.alerts import runway_alert
 @pytest.mark.parametrize(
     ("cash", "expenses", "revenue", "expected"),
     [
-        (1_000, 100, 0, "ok"),
+        (1_200, 100, 0, "ok"),
         (1_199, 100, 0, "watch"),
         (600, 100, 0, "watch"),
         (599, 100, 0, "act"),
