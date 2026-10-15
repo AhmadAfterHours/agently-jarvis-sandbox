@@ -3,9 +3,11 @@
 
 def monthly_burn(expenses: list[float], revenue: list[float]) -> float:
     """Average net monthly burn over the months given."""
+    if len(expenses) != len(revenue):
+        raise ValueError("expenses and revenue must have the same number of months")
     if not expenses:
         raise ValueError("no months given")
-    net = [e - r for e, r in zip(expenses, revenue)]
+    net = [expense - income for expense, income in zip(expenses, revenue)]
     return sum(net) / len(net)
 
 
