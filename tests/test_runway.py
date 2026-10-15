@@ -9,6 +9,13 @@ def test_monthly_burn_averages_net_spend():
     assert monthly_burn([100, 120], [40, 60]) == 60
 
 
+def test_monthly_burn_rejects_mismatched_month_lists():
+    with pytest.raises(
+        ValueError, match="expenses and revenue must have the same number of months"
+    ):
+        monthly_burn([100, 120], [40])
+
+
 def test_runway_months_divides_cash_by_burn():
     assert runway_months(600, [100, 120], [40, 60]) == 10
 
